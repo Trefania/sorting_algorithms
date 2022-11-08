@@ -7,18 +7,21 @@
  */
 void selection_sort(int *array, size_t size)
 {
-	unsigned int i, a, min_num;
+	unsigned int i, a, *min_num;
+
+	if (array == NULL || size < 2)
+		return;
 
 	for (i = 0; i < size - 1; i++)
 	{
-		min_num = i;
+		min_num = array + i;
 
 		for (a = i + 1; a < size; a++)
-			if (array[a] < array[min_num])
-				min_num = a;
+			min_num = (array[a] < *min_num) ? (array + a) : min_num;
+
 		if (min_num != i)
 		{
-			swap(&array[min_num], &array[i]);
+			swap(array + i, min_num);
 			print_array(array, size);
 		}
 	}
